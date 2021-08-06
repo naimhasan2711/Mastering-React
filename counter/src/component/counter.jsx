@@ -1,14 +1,27 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
+  // constructor() {
+  //   super();
+  //   this.handleIncrement = this.handleIncrement.bind(this);
+  // }
   state = {
-    count: 10,
+    count: 0,
   };
 
   styles = {
     fontSize: 13,
     fontWeight: "bold",
   };
+
+  handleIncrement = (product) => {
+    console.log(product);
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  // doHandleIncrement = () => {
+  //   this.handleIncrement({ id: 1 });
+  // };
 
   render() {
     return (
@@ -17,6 +30,7 @@ class Counter extends Component {
           {this.formatCount()}
         </span>
         <button
+          onClick={() => this.handleIncrement({ id: 1 })}
           style={{ fontWeight: "bold" }}
           className="btn btn-secondary btn-sm"
         >
@@ -25,6 +39,10 @@ class Counter extends Component {
       </React.Fragment>
     );
   }
+
+  /*
+  
+  */
 
   formatCount() {
     const { count } = this.state;
