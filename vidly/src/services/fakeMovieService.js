@@ -69,7 +69,7 @@ const movies = [
   {
     _id: "5b21ca3eeb7f6fbccd471820",
     title: "The Dark Knight",
-    genre: { _id: "5b21ca3eeb7f6fbccd471819", name: "Action" },
+    genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
     numberInStock: 5,
     dailyRentalRate: 4.5,
   },
