@@ -17,24 +17,28 @@ class Movies extends Component {
     sortColumn: { path: "title", order: "asc" },
   };
 
+  /* below function generates list of genres(also add all genres) and set genres list to local state */
   componentDidMount() {
     const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
     this.setState({ movies: getMovies(), genres });
   }
 
+  /* below function delete a movie from the list, pass a movie parametes only and set new list to the state */
   handleDelete = (movie) => {
-    const movies = this.state.movies.filter((m) => m._id !== movie._id);
+    const movies = this.state.movies.filter((m) => m._id !== movie._id); //genereating new movies array using filter method
     this.setState({ movies });
   };
 
+  /**below function handle the like event in the list */
   handleLiked = (movie) => {
-    const movies = [...this.state.movies];
-    const index = movies.indexOf(movie);
-    movies[index] = { ...movies[index] };
-    movies[index].liked = !movies[index].liked;
-    this.setState({ movies });
+    const movies = [...this.state.movies]; //get array of movie list
+    const index = movies.indexOf(movie); //get index of selected movie
+    movies[index] = { ...movies[index] }; //get value from index
+    movies[index].liked = !movies[index].liked; //check if it is liked or not
+    this.setState({ movies }); //set values to state
   };
 
+  /*below method set the page change event*/
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
@@ -47,7 +51,8 @@ class Movies extends Component {
     this.setState({ sortColumn });
   };
 
-  getPagedData = ()=>{
+  getPagedData = () => {
+    /**get below value from state */
     const {
       currentPage,
       pageSize,
@@ -55,31 +60,31 @@ class Movies extends Component {
       movies: allMovies,
       selectedGenre,
     } = this.state;
+
+    /** specify the selected genres*/
     const filtered =
       selectedGenre && selectedGenre._id
         ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
         : allMovies;
 
+    /**sort column */
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
+    /**paginate movie list */
     const movies = paginate(sorted, currentPage, pageSize);
 
-    return {totalCount: filtered.length, data:movies};
-  }
+    return { totalCount: filtered.length, data: movies };
+  };
 
   render() {
-    const { length: count } = this.state.movies;
-    const {
-      currentPage,
-      pageSize,
-      sortColumn,
-      
-    } = this.state;
+    const { length: count } = this.state.movies; /**get movie list lent */
+    const { currentPage, pageSize, sortColumn } =
+      this.state; /**get this value from local state */
     if (count === 0) {
       return <p>There are no movies in the databases.</p>;
     }
-      
-    const {totalCount,data:movies} = this.getPagedData()
+
+    const { totalCount, data: movies } = this.getPagedData();
 
     return (
       <div className="row">
